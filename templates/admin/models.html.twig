@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="row mt-5 border-bottom pb-2">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2">
+                <a href="{{ path('models_page') }}" class="btn btn-outline-success w-75 active">Модели</a>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2 mt-3 mt-sm-0">
+                    <a href="{{ path('users_page') }}" class="btn btn-outline-success w-75">Пользователи</a>
+                </div>
+            {% endif %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2 mt-3 mt-md-0">
+                <a href="{{ path('stamps_page') }}" class="btn btn-outline-success w-75">Марки</a>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <form method="get">
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                            <select class="form-select" name="searchstamps">
+                                {% if stamp != '' %}
+                                    <option></option>
+                                    <option value="{{ stamp.id }}" selected>{{ stamp.name }}</option>
+                                    {% else %}
+                                        <option disabled selected>Поиск моделей по марке</option>
+                                {% endif %}
+                                {% for stamp in stamps %}
+                                    <option value="{{ stamp.id }}">{{ stamp.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-success">Поиск</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <form method="get">
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                            <input type="text" class="form-control" placeholder="Введите имя модели" name="searchfor" value="{{ searchfor }}">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-success">Поиск</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <a href="/admin/model/0" class="btn btn-outline-success">Создать модель</a>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card card-register p-4 w-100">
+                    <div class="row border-bottom h6 text-muted">
+                        <div class="col-6 col-sm-6 col-md-3 col-lg">Имя модели</div>
+                        <div class="col-6 col-sm-6 col-md-4 col-lg">Расположение руля</div>
+                        <div class="col-md col-lg"></div>
+                    </div>
+                    {% for model in models %}
+                        <div class="row border-bottom h6 my-3">
+                            <div class="col-6 col-sm-6 col-md-3 col-lg">
+                                {{ model.name }}
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-4 col-lg">
+                                {{ model.wheel }}
+                            </div>
+                            <div class="col-6 col-sm col-md col-lg mt-3 mt-md-0">
+                                <div class="row">
+                                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+                                        <div class="col-12 col-sm-6">
+                                            <a href="/admin/model/{{ model.id }}" class="btn btn-outline-success">Редактировать</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <div class="col-12 col-sm-6 my-2 mt-sm-0">
+                                            <a href="/admin/delete_model/{{ model.id }}" class="btn btn-outline-danger">Удалить</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

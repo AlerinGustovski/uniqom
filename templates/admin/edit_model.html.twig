@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-12 h1">
+                {% if perm == 0 %}
+                    Создание модели
+                {% else %}
+                    Редактирование модели
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card card-register p-3 w-100">
+                    <form method="post">
+                        <div class="row my-3 border-bottom">
+                            <div class="col-lg-2">Марка</div>
+                            <div class="col-lg-3">Наименование модели</div>
+                            <div class="col-lg-3">Расположение руля</div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-12 col-md-3 col-lg-2">
+                                {% if perm == 1 %}
+                                    <select class="form-control" disabled>
+                                        <option value="{{ stamps.id }}">{{ stamps.name }}</option>
+                                    </select>
+                                    {% else %}
+                                        <select name="stamp_id" class="form-select">
+                                            {% for stamp in stamps %}
+                                                <option value="{{ stamp.id }}">{{ stamp.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                {% endif %}
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3 my-2 my-md-0">
+                                <input type="text" value="{{ model.name }}" name="model_name" class="form-control">
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3 my-2 my-md-0">
+                                <select class="form-select" name="wheel" aria-label="Default select example" value="{{ model.wheel }}">
+                                    <option value="Правый руль">Правый руль</option>
+                                    <option value="Левый руль">Левый руль</option>
+                                </select>
+                            </div>
+                            <div class="col my-2 my-md-0">
+                                <button class="btn btn-outline-success">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

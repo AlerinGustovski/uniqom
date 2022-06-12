@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    height: 100%;
+    min-height: 100%;
+    background: #f8faff;
+    font-family: 'Roboto', sans-serif;
+}
+html{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.header{
+    background: #1e2125;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+}
+
+.card-register{
+    background: white;
+    border: 2px solid #20c997;
+    border-radius: 5px;
+    width: fit-content;
+}

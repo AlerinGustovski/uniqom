@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div class="container">
+
+        <div class="row mt-5 border-bottom pb-2">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2">
+                <a href="{{ path('models_page') }}" class="btn btn-outline-success w-75">Модели</a>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2 mt-3 mt-sm-0">
+                    <a href="{{ path('users_page') }}" class="btn btn-outline-success w-75">Пользователи</a>
+                </div>
+            {% endif %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2 mt-3 mt-md-0">
+                <a href="{{ path('stamps_page') }}" class="btn btn-outline-success w-75 active">Марки</a>
+            </div>
+        </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="row mt-5">
+                <div class="col-12">
+                    <a class="btn btn-success" href="/admin/stamp/0">Создать марку автомобиля</a>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card card-register p-4 w-100">
+                    <div class="row border-bottom h5 text-muted">
+                        <div class="col">Наименование</div>
+                    </div>
+                    {% for stamp in stamps %}
+                        <div class="row border-bottom h6 my-3">
+                            <div class="col-12 col-sm mb-3 mb-sm-0">
+                                {{ stamp.name }}
+                            </div>
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+                                <div class="col">
+                                    <a class="btn btn-outline-success" href="/admin/stamp/{{ stamp.id }}">Редактировть</a>
+                                </div>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="col">
+                                    <a class="btn btn-outline-danger" href="/admin/delete_stamp/{{ stamp.id }}">Удалить</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

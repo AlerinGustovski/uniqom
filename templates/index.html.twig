@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-5 border-bottom pb-2">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2">
+                <a href="{{ path('models_page') }}" class="btn btn-outline-success w-75">Модели</a>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2 mt-3 mt-sm-0">
+                    <a href="{{ path('users_page') }}" class="btn btn-outline-success w-75">Пользователи</a>
+                </div>
+            {% endif %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2 mt-3 mt-md-0">
+                <a href="{{ path('stamps_page') }}" class="btn btn-outline-success w-75">Марки</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
